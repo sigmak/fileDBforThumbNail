@@ -9,11 +9,19 @@ namespace fileDBforThumbNail
         public FrmMain()
         {
             InitializeComponent();
+            
+            //DoubleBuffered = true;  //실패인듯.....
 
             //출처 : http://chungjs9.blogspot.com/2011/06/c.html
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.DoubleBuffer, true);
             SetStyle(ControlStyles.UserPaint, true);
+
+            toolStripStatusLabel1.Text = "Total  :";//$"{num}/{selectedAlignments.Count}";
+            toolStripStatusLabel2.Text = $"{0}";//$"{num}/{selectedAlignments.Count}";
+            toolStripStatusLabel3.Text = "num";//$"{num}/{selectedAlignments.Count}";
+            toolStripStatusLabel4.Text = $"{0}";// $"{mainDGV.RowCount}";//$"{num}/{selectedAlignments.Count}";
+
         }
 
         private void BtnFilePath0_Click(object sender, EventArgs e)
@@ -79,6 +87,7 @@ namespace fileDBforThumbNail
 
                 EntryInfo[] list = db.ListFiles();
 
+
                 for (int i = 0; i < list.Length; i++)
                 {
                     EntryInfo info = list[i];
@@ -114,9 +123,18 @@ namespace fileDBforThumbNail
                         flowLayoutPanel1.Refresh();
 
                         //시간이 오래걸리고 버벅이는 증상 해결못함.
+                        Thread.Sleep(10);
+
+                        //toolStripStatusLabel3.Text = "num :";//$"{num}/{selectedAlignments.Count}";
+                        toolStripStatusLabel4.Text = $"{i}";// $"{mainDGV.RowCount}";//$"{num}/{selectedAlignments.Count}";
+                        statusStrip1.Refresh(); 
                     }
 
                 }
+                //toolStripStatusLabel1.Text = "Total Rows :" ;//$"{num}/{selectedAlignments.Count}";
+                toolStripStatusLabel2.Text = $"{list.Length}";//$"{num}/{selectedAlignments.Count}";
+                statusStrip1.Refresh();
+
 
 
             }
